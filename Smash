@@ -1,12 +1,41 @@
 PImage backg;
+
+PFont font;
+boolean firstScreen;
+boolean startGame;
+PImage ald;
+PImage zrich;
+PImage sam;
+PImage kurz;
+PImage logo; 
+PImage smashball;
+boolean test;
 Player p1 = new Player();
 private boolean[] keys = new boolean[4];
 boolean onPlat =false;
 void setup(){
-  size(800,600);
+  size(800, 600);
+
+  font = loadFont("f.vlw");
   backg = loadImage("bg.jpg");
-  
-//drawStartScreen();
+  ald = loadImage("ald.png");
+  ald.resize(200, 300);
+  zrich = loadImage("zrich.png");
+  sam = loadImage("sam.png");
+  kurz = loadImage("kurz.png");
+  logo = loadImage("logo.png");
+  smashball = loadImage("smashball.png");
+
+
+
+
+
+
+  drawStartScreen();
+
+  firstScreen = true;
+  startGame = false;
+  test = true;
   
 
 }
@@ -14,14 +43,31 @@ void setup(){
 //THIS IS YOUR MAIN ESSENTIALLY
 //draw is a loop if u didn't know. 
 void draw(){
+  if (firstScreen)
+    drawStartScreen();
+  if (mousePressed &&  (mouseX >= 250 && mouseX <= 550) && 
+    (mouseY >=375 && mouseY <= 445 )) {
+    firstScreen = false;
+    drawCharSelection();
+  }
+
+
+
   
+  //GAME CODE:
+  if (mousePressed &&  (mouseX >= 300 && mouseX <= 500) && (mouseY >=450 && mouseY <=550 )) 
+    test=false;
+    
+    if(test==false){
+    platCollide();
   drawBackground();
   drawPlatforms();
   drawPlayer(p1);
-  
+  p1.gravity(onPlat);
   platCollide();
-  if(onPlat==false)
-    p1.gravity();
+  
+  
+    
   
   
   if(keys[0]==true)
@@ -30,26 +76,96 @@ void draw(){
     p1.move("LEFT");
   if(keys[2]==true)
     p1.move("DOWN");
+    }
+    
   
 }
 
 
 
 
-public void drawStartScreen(){
-background(255);
-textAlign(CENTER);
-fill(0);
-text("Welcome to EA Smash!\nPress continue to pick your characters",width/2, height/2 ); 
-stroke(255,0,0);
-rect(400,300, 100, 40);
-fill(255,0,0);
-String t = "CONTINUE";
-text(t, 660,310);
-  
+public void drawStartScreen() {
+
+  textFont(font);
+  textSize(25);
+  background(255);
+
+  //Logo
+  logo.resize(250, 300);
+  image(logo, 270.5, -10);
+  //Smashball
+  smashball.resize(350, 350);
+  image(smashball, -40, -50);
+
+
+  textAlign(CENTER);
+  fill(0);
+  text("Welcome to EA Smash!\nPress continue to pick your characters", width/2, height/2 ); 
+
+
+
+  //Continue Button
+  stroke(255, 0, 0);
+  noFill();
+  rect(250, 375, 300, 70);
+  fill(255, 0, 0);
+  text("CONTINUE", 400, 420);
+}
+
+public void drawCharSelection() {
+  background(255);
+  textFont(font);
+  fill(0, 100, 200);
+  textAlign(CENTER);
+  text("SELECT YOUR CHARACTER!", 400, 50);
+
+  //Actual Characters
+
+  stroke(0, 0, 255, 30);
+  noFill();
+  //Char 1
+  rect(35, 65, 170, 500);
+  image(ald, 25, 70);
+
+
+
+  //Char 2
+  rect(225, 65, 170, 500);
+  image(zrich, 60, -40);
+
+
+
+
+  //Char 3
+
+  rect(415, 65, 170, 500);
+  sam.resize(165, 280);
+  image(sam, 420, 102);
+
+  //Char 4
+  rect(605, 65, 170, 500);
+  kurz.resize(450, 450);
+  image(kurz, 600, 110);
+  fill(130, 100, 0);
+  textSize(25);
+  text("Donkey Kurz", 682.5, 350);
+  rect(620, 352.5, 125, 2.5);
+
+  //Continue Button
+  noFill();
+  stroke(255, 0, 0);
+
+
+  rect(300, 450, 200, 100);
 }
 
 
+
+void drawGame() {
+  image (backg, 0, 0);
+  fill(0);
+  rect(0, 535, width, height);
+}
 public void drawBackground(){
  image (backg,0,0);
  fill(0);
@@ -63,25 +179,43 @@ void drawPlatforms()
   rect(300, 430, 200,10);
 }
 void platCollide(){
-  if(p1.getY()+30 >= 530 && (p1.getX()+30>=100 && p1.getX()<=300)){
+  if(p1.getY()+30 >= 530 && p1.getY()+30 <= 540 && (p1.getX()+30>=100 && p1.getX()<=300)){
      onPlat=true;
      p1.setY(500);
+     println("bonnie");
+     p1.jumpReset();
+     //p1.setyVel(0);
   }
-  else if(p1.getY()+30 >= 530 && (p1.getX()+30>=500 && p1.getX()<=700)){
+  else if(p1.getY()+30 >= 530 && p1.getY()+30 <= 540 && (p1.getX()+30>=500 && p1.getX()<=700)){
     onPlat=true;
-   p1.setY(500);
+    p1.setY(500);
+    println("bonnie");
+    p1.jumpReset();
+   //p1.setyVel(0);
   }
-  else if(p1.getY()+30 >= 430 && (p1.getX()+30>=300 && p1.getX()<=500)){
+  else if((p1.getY()+30 >= 430&&p1.getY()+30 <= 440) && (p1.getX()+30>=300 && p1.getX()<=500)){
     onPlat=true;
-   p1.setY(400);
+    p1.setY(400);
+    println("bonnie");
+    p1.jumpReset();
+   //p1.setyVel(0);
+  }
+  else if(p1.getY()+30 == 600){
+    onPlat=true;
+    println("bonnie");
+   //p1.setyVel(0);
   }
   else{
     onPlat=false;
+    println("bill");
+    //p1.setyVel(1);
   }
 }
 void drawPlayer(Player p){
   p.draw();
 }
+
+
 void keyPressed(){
  // if(key == CODED){
     if (keyCode == RIGHT ) 
@@ -99,8 +233,9 @@ void keyPressed(){
     }
     if (keyCode == UP ) 
     {
-      for(int i = 0 ; i < 50;i++)
+     
          p1.move("UP");
+         
     }
     
   }
