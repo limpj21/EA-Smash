@@ -1,0 +1,52 @@
+public class Player extends MovingThing{
+  private double speed;
+  private boolean[] keys = new boolean[4];
+  private int jump=1;
+  public Player(){
+    speed = 5;
+  }
+  public Player(int x, int y){
+    
+  }
+  
+  public void move(String direction)
+  {
+    //add code here for all 4 Directions
+    if(direction.equals("LEFT"))
+      setX(getX()-getSpeed());
+    
+    if(direction.equals("RIGHT"))
+      setX(getX()+getSpeed());
+    
+    if(direction.equals("DOWN"))
+      setY(getY()+getSpeed());
+    
+    if(direction.equals("UP")){
+      
+      
+        setY(getY()-1);
+      
+      
+    }
+  }
+  
+  public void setSpeed(double s){
+    speed = s;
+  }
+  public double getSpeed(){
+    return this.speed;
+  }
+  
+  public void draw(){
+    fill(0,200,235);
+    rect((int)getX(),(int) getY(),30,30);
+  }
+  public void gravity(){
+    
+    setY(getY()+3);
+    
+  }
+  
+  
+  
+}
