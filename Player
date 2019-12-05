@@ -1,3 +1,4 @@
+
 public class Player extends MovingThing{
   private double speed;
   private boolean[] keys = new boolean[4];
@@ -43,8 +44,11 @@ public class Player extends MovingThing{
     return this.speed;
   }
   
-  public void draw(){
-    fill(0,200,235);
+  public void draw(PImage character){
+    character.resize(200,200);
+    image(character,(int)getX()-80, (int)getY()-110);
+    
+    noFill();
     rect((int)getX(),(int) getY(),30,30);
   }
   public void gravity(boolean onPlat){
@@ -63,6 +67,9 @@ public class Player extends MovingThing{
   }
   public void jumpReset(){
     jump=2;
+  }
+  public void charChoose(){
+    
   }
   
   
