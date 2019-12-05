@@ -10,6 +10,7 @@ PImage kurz;
 PImage logo; 
 PImage smashball;
 boolean test;
+int choice;
 Player p1 = new Player();
 private boolean[] keys = new boolean[4];
 boolean onPlat =false;
@@ -25,6 +26,7 @@ void setup(){
   kurz = loadImage("kurz.png");
   logo = loadImage("logo.png");
   smashball = loadImage("smashball.png");
+  choice = 0;
 
 
 
@@ -123,9 +125,11 @@ public void drawCharSelection() {
 
   stroke(0, 0, 255, 30);
   noFill();
+  
   //Char 1
   rect(35, 65, 170, 500);
   image(ald, 25, 70);
+
 
 
 
@@ -212,7 +216,8 @@ void platCollide(){
   }
 }
 void drawPlayer(Player p){
-  p.draw();
+  if(choice ==0)
+    p.draw(zrich);
 }
 
 
