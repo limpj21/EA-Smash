@@ -1,0 +1,125 @@
+PImage backg;
+Player p1 = new Player();
+private boolean[] keys = new boolean[4];
+boolean onPlat =false;
+void setup(){
+  size(800,600);
+  backg = loadImage("bg.jpg");
+  
+//drawStartScreen();
+  
+
+}
+
+//THIS IS YOUR MAIN ESSENTIALLY
+//draw is a loop if u didn't know. 
+void draw(){
+  
+  drawBackground();
+  drawPlatforms();
+  drawPlayer(p1);
+  
+  platCollide();
+  if(onPlat==false)
+    p1.gravity();
+  
+  
+  if(keys[0]==true)
+    p1.move("RIGHT");
+  if(keys[1]==true)
+    p1.move("LEFT");
+  if(keys[2]==true)
+    p1.move("DOWN");
+  
+}
+
+
+
+
+public void drawStartScreen(){
+background(255);
+textAlign(CENTER);
+fill(0);
+text("Welcome to EA Smash!\nPress continue to pick your characters",width/2, height/2 ); 
+stroke(255,0,0);
+rect(400,300, 100, 40);
+fill(255,0,0);
+String t = "CONTINUE";
+text(t, 660,310);
+  
+}
+
+
+public void drawBackground(){
+ image (backg,0,0);
+ fill(0);
+ rect(0,535,width,height);
+}
+void drawPlatforms()
+{
+  fill(100,0,0);
+  rect(100, 530, 200,10);
+  rect(width-300, 530, 200,10);
+  rect(300, 430, 200,10);
+}
+void platCollide(){
+  if(p1.getY()+30 >= 530 && (p1.getX()+30>=100 && p1.getX()<=300)){
+     onPlat=true;
+     p1.setY(500);
+  }
+  else if(p1.getY()+30 >= 530 && (p1.getX()+30>=500 && p1.getX()<=700)){
+    onPlat=true;
+   p1.setY(500);
+  }
+  else if(p1.getY()+30 >= 430 && (p1.getX()+30>=300 && p1.getX()<=500)){
+    onPlat=true;
+   p1.setY(400);
+  }
+  else{
+    onPlat=false;
+  }
+}
+void drawPlayer(Player p){
+  p.draw();
+}
+void keyPressed(){
+ // if(key == CODED){
+    if (keyCode == RIGHT ) 
+    {
+      keys[0]=true;
+      
+    }
+    if (keyCode == LEFT ) 
+    {
+     keys[1]=true;
+    }
+    if (keyCode == DOWN ) 
+    {
+     keys[2]=true;
+    }
+    if (keyCode == UP ) 
+    {
+      for(int i = 0 ; i < 50;i++)
+         p1.move("UP");
+    }
+    
+  }
+  void keyReleased(){
+  //if(key == CODED){
+    if (keyCode == RIGHT ) 
+    {
+      keys[0]=false;
+      
+    }
+    if (keyCode == LEFT ) 
+    {
+     keys[1]=false;
+    }
+    if (keyCode == DOWN ) 
+    {
+     keys[2]=false;
+    }
+    
+    
+//  }
+}
