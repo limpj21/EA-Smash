@@ -101,12 +101,20 @@ if(firstScreen==false){
     p2.move("DOWN");
     
     if(keys[6]==true){
-      a.add(new Melee(p1.getX(),p1.getY(),5));
+      a.add(new Melee(p1.getX()+p1.getWidth()+60,p1.getY()-55,5));
      shipPos = p1.getX();
      keys[4]=false;
 
     }
-    
+      
+   for(int i = 0; i < a.getList().size();i++){
+     if(a.getList().get(i).getX()>shipPos+92){
+       a.remove(i);
+     }
+   }
+   a.drawEmAll();
+   a.moveEmAll("RIGHT");
+
     
     }
     
