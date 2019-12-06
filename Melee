@@ -34,7 +34,8 @@ public class Melee extends MovingThing
   
   public void draw(){
     fill(0,200,235);
-    rect((int)getX(),(int) getY(),30,30);
+    noStroke();
+    rect((int)getX(),(int) getY(),25,10);
   }
 }
 
