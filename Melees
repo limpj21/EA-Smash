@@ -1,0 +1,29 @@
+public class Melees{
+private ArrayList<Melee> melee; 
+  public Melees(){
+    melee = new ArrayList<Melee>();
+  }
+  public void add(Melee me){
+    melee.add(me);
+  }
+  public void remove(int i){
+    melee.remove(i);
+  }
+  
+  public ArrayList<Melee> getList(){
+    return melee;
+  }
+  
+  
+  public void drawEmAll(){
+    for(int i = 0; i < melee.size();i++){
+      melee.get(i).draw();
+    }
+  }
+  public void moveEmAll(String d){
+    for(int i = 0; i < melee.size(); i++){
+      melee.get(i).move(d);
+    }
+  }
+  
+}
