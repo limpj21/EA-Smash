@@ -1,4 +1,4 @@
-
+//THIS IS THE PLAYER CLASS. I WAS MESSING WITH VOID DRAW()!!
 public class Player extends MovingThing{
   private double speed;
   private boolean[] keys = new boolean[4];
@@ -9,7 +9,9 @@ public class Player extends MovingThing{
     speed = 5;
   }
   public Player(int x, int y){
-    
+    setX(x);
+    setY(y);
+    speed=5;
   }
   
   public void move(String direction)
@@ -44,13 +46,46 @@ public class Player extends MovingThing{
     return this.speed;
   }
   
-  public void draw(PImage character){
-    character.resize(200,200);
-    image(character,(int)getX()-80, (int)getY()-110);
-    
+  public void draw(PImage character, int c){
     noFill();
-    rect((int)getX(),(int) getY(),30,30);
+    
+    if (c == 1){
+      //i know its a hit box is weird, 
+      //but it will make game more balanced
+    character.resize(225,150);
+    image(character,(int)getX()-92, (int)getY()-100.5);
+    rect((int)getX(),(int) getY()-70,35,90);
+    
+    }
+    if (c == 2){
+      //GOOD
+    character.resize(300,225);
+    image(character,(int)getX()-130, (int)getY()-135);
+    rect((int)getX()-10,(int) getY()-67.5,60,97.5);
+
+    
+    }
+    if (c == 3){
+      //GOOD
+    character.resize(125,125);
+    image(character, (int)getX()-48, (int)getY()-70);
+     rect((int)getX()-10,(int) getY()-70,50,100);
+   
+    }
+    
+    if (c == 4){
+       character.resize(300,200);
+    image(character, (int)getX()-40, (int)getY()-70);
+     rect((int)getX()-10,(int) getY()-70,50,100);
+      
+    }
+    
+    
   }
+  
+  
+  
+  
   public void gravity(boolean onPlat){
     
     if(onPlat==false)
@@ -75,3 +110,4 @@ public class Player extends MovingThing{
   
   
 }
+
