@@ -2,6 +2,8 @@
 PImage backg;
 
 PFont font;
+double shipPos;
+private Melees a = new Melees();
 boolean firstScreen;
 boolean startGame;
 PImage ald;
@@ -12,10 +14,13 @@ PImage logo;
 PImage smashball;
 boolean test;
 int choice;
+int choice1;
 Player p1 = new Player();
 Player p2 = new Player(750,10);
-private boolean[] keys = new boolean[4];
+private boolean[] keys = new boolean[8];
 boolean onPlat =false;
+boolean onPlat2 =false;
+int character;
 void setup(){
   size(800, 600);
 
@@ -29,6 +34,8 @@ void setup(){
   logo = loadImage("logo.png");
   smashball = loadImage("smashball.png");
   choice = 1;
+  choice1 = 2;
+  character = 1;
 
 
 
@@ -69,8 +76,10 @@ if(firstScreen==false){
     platCollide();
   drawBackground();
   drawPlatforms();
-  drawPlayer(p1);
+  drawPlayer(p1,choice);
   p1.gravity(onPlat);
+  drawPlayer(p2,choice1);
+  p2.gravity(onPlat2);
   platCollide();
   
   
@@ -83,22 +92,38 @@ if(firstScreen==false){
     p1.move("LEFT");
   if(keys[2]==true)
     p1.move("DOWN");
+    
+    if(keys[5]==true)
+    p2.move("RIGHT");
+  if(keys[3]==true)
+    p2.move("LEFT");
+  if(keys[4]==true)
+    p2.move("DOWN");
+    
+    if(keys[6]==true){
+      a.add(new Melee(p1.getX(),p1.getY(),5));
+     shipPos = p1.getX();
+     keys[4]=false;
+
+    }
+    
+    
     }
     
   
 }
 
-void drawPlayer(Player p){
-  if(choice ==1)
+void drawPlayer(Player p, int deez){
+  if(deez ==1)
     p.draw(ald, 1);
     
-   if (choice == 2)
+   if (deez == 2)
    p.draw(zrich, 2);
    
-   if (choice == 3)
+   if (deez == 3)
    p.draw(sam, 3);
    
-   if (choice == 4)
+   if (deez == 4)
    p.draw(kurz, 4);
 }
 
@@ -133,10 +158,8 @@ public void drawStartScreen() {
 
 public void drawCharSelection() {
   background(255);
-  textFont(font);
-  fill(0, 100, 200);
-  textAlign(CENTER);
-  text("SELECT YOUR CHARACTER!", 400, 50);
+  
+  
 
   //Actual Characters
 
@@ -172,26 +195,82 @@ public void drawCharSelection() {
   text("Donkey Kurz", 682.5, 350);
   rect(620, 352.5, 125, 2.5);
   
+  textFont(font);
+  if(character==1){
+    fill(0, 100, 200);
+    textAlign(CENTER);
+    text("SELECT CHARACTER ONE!", 400, 50);
+  
+  
   if (mousePressed &&  (mouseX >= 35 && mouseX <= 205) && 
     (mouseY >=65 && mouseY <= 365 )) {
       choice = 1;
       println("choice 1: \t");
+      character = 2;
     }
     
     if (mousePressed &&  (mouseX >= 225 && mouseX <= 395) && 
     (mouseY >=65 && mouseY <= 365 )) {
     choice = 2;
     println("choice 2: \t");
+    character = 2;
     }
   
    if (mousePressed &&  (mouseX >= 415 && mouseX <= 585) && 
-    (mouseY >=65 && mouseY <= 365 )) 
+    (mouseY >=65 && mouseY <= 365 )) {
     choice = 3;
+    character = 2;
+    }
     
      if (mousePressed &&  (mouseX >= 605 && mouseX <= 775) && 
-    (mouseY >=65 && mouseY <= 365 )) 
+    (mouseY >=65 && mouseY <= 365 )) {
     choice = 4;
+    character=2;
+    }
     
+    
+   
+  }
+  
+  else if(character==2){
+    textFont(font);
+    fill(0, 100, 200);
+    textAlign(CENTER);
+    text("SELECT CHARACTER TWO!", 400, 50);
+  
+  
+   if (mousePressed &&  (mouseX >= 35 && mouseX <= 205) && 
+    (mouseY >=65 && mouseY <= 365 )) {
+      choice1 = 1;
+      println("choice 1: \t");
+      //character = 1;
+    }
+    
+    if (mousePressed &&  (mouseX >= 225 && mouseX <= 395) && 
+    (mouseY >=65 && mouseY <= 365 )) {
+    choice1 = 2;
+    println("choice 2: \t");
+    //character = 1;
+    }
+  
+   if (mousePressed &&  (mouseX >= 415 && mouseX <= 585) && 
+    (mouseY >=65 && mouseY <= 365 )) {
+    choice1 = 3;
+    //character = 1;
+    }
+    
+     if (mousePressed &&  (mouseX >= 605 && mouseX <= 775) && 
+    (mouseY >=65 && mouseY <= 365 )) {
+    choice1 = 4;
+   // character=1;
+    }
+    
+    
+  }
+  
+  
+  
+  
 
   //Continue Button
   noFill();
@@ -246,13 +325,39 @@ void platCollide(){
     p1.jumpReset();
    //p1.setyVel(0);
   }
-  else if(p1.getY()+30 == 600){
-    onPlat=true;
-    println("bonnie");
-   //p1.setyVel(0);
-  }
+
   else{
     onPlat=false;
+    println("bill");
+    //p1.setyVel(1);
+  }
+  
+  if((p2.getY()+30 >= 530 && p2.getY()+30 <= 540 && (p2.getX()+30>=100 && p2.getX()<=300))){
+     onPlat2=true;
+    
+       p2.setY(500);
+      
+     println("bonnie");
+     p2.jumpReset();
+     //p1.setyVel(0);
+  }
+  else if(p2.getY()+30 >= 530 && p2.getY()+30 <= 540 && (p2.getX()+30>=500 && p2.getX()<=700)){
+    onPlat2=true;
+    p2.setY(500);
+    println("bonnie");
+    p2.jumpReset();
+   //p1.setyVel(0);
+  }
+  else if((p2.getY()+30 >= 430&&p2.getY()+30 <= 440) && (p2.getX()+30>=300 && p2.getX()<=500)){
+    onPlat2=true;
+    p2.setY(400);
+    println("bonnie");
+    p2.jumpReset();
+   //p1.setyVel(0);
+  }
+
+  else{
+    onPlat2=false;
     println("bill");
     //p1.setyVel(1);
   }
@@ -275,11 +380,30 @@ void keyPressed(){
     {
      keys[2]=true;
     }
+    if (key == 'a' || key=='A' ) 
+    {
+     keys[3]=true;
+    }
+    if (key == 's' || key=='S' ) 
+    {
+     keys[4]=true;
+    }
+    if (key == 'd' || key=='D' ) 
+    {
+     keys[5]=true;
+    }
+    if (key == 'm' || key=='M' ) 
+    {
+     keys[6]=true;
+    }
     if (keyCode == UP ) 
     {
      
          p1.move("UP");
          
+    }
+    if(key=='w'||key=='W'){
+      p2.move("UP");
     }
     
   }
@@ -297,6 +421,22 @@ void keyPressed(){
     if (keyCode == DOWN ) 
     {
      keys[2]=false;
+    }
+    if (key == 'a' || key=='A' ) 
+    {
+     keys[3]=false;
+    }
+    if (key == 's' || key=='S' ) 
+    {
+     keys[4]=false;
+    }
+    if (key == 'd' || key=='D' ) 
+    {
+     keys[5]=false;
+    }
+    if (key == 'm' || key=='M' ) 
+    {
+     keys[6]=false;
     }
     
     
