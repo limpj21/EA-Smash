@@ -1,3 +1,4 @@
+
 PImage backg;
 
 PFont font;
@@ -12,6 +13,7 @@ PImage smashball;
 boolean test;
 int choice;
 Player p1 = new Player();
+Player p2 = new Player(750,10);
 private boolean[] keys = new boolean[4];
 boolean onPlat =false;
 void setup(){
@@ -26,7 +28,7 @@ void setup(){
   kurz = loadImage("kurz.png");
   logo = loadImage("logo.png");
   smashball = loadImage("smashball.png");
-  choice = 0;
+  choice = 1;
 
 
 
@@ -50,10 +52,13 @@ void draw(){
   if (mousePressed &&  (mouseX >= 250 && mouseX <= 550) && 
     (mouseY >=375 && mouseY <= 445 )) {
     firstScreen = false;
-    drawCharSelection();
+    
+    
   }
 
-
+if(firstScreen==false){
+  drawCharSelection();  
+}
 
   
   //GAME CODE:
@@ -83,7 +88,19 @@ void draw(){
   
 }
 
-
+void drawPlayer(Player p){
+  if(choice ==1)
+    p.draw(ald, 1);
+    
+   if (choice == 2)
+   p.draw(zrich, 2);
+   
+   if (choice == 3)
+   p.draw(sam, 3);
+   
+   if (choice == 4)
+   p.draw(kurz, 4);
+}
 
 
 public void drawStartScreen() {
@@ -127,14 +144,14 @@ public void drawCharSelection() {
   noFill();
   
   //Char 1
-  rect(35, 65, 170, 500);
+  rect(35, 65, 170, 300);
   image(ald, 25, 70);
 
 
 
 
   //Char 2
-  rect(225, 65, 170, 500);
+  rect(225, 65, 170, 300);
   image(zrich, 60, -40);
 
 
@@ -142,18 +159,39 @@ public void drawCharSelection() {
 
   //Char 3
 
-  rect(415, 65, 170, 500);
+  rect(415, 65, 170, 300);
   sam.resize(165, 280);
   image(sam, 420, 102);
 
   //Char 4
-  rect(605, 65, 170, 500);
+  rect(605, 65, 170, 300);
   kurz.resize(450, 450);
   image(kurz, 600, 110);
   fill(130, 100, 0);
   textSize(25);
   text("Donkey Kurz", 682.5, 350);
   rect(620, 352.5, 125, 2.5);
+  
+  if (mousePressed &&  (mouseX >= 35 && mouseX <= 205) && 
+    (mouseY >=65 && mouseY <= 365 )) {
+      choice = 1;
+      println("choice 1: \t");
+    }
+    
+    if (mousePressed &&  (mouseX >= 225 && mouseX <= 395) && 
+    (mouseY >=65 && mouseY <= 365 )) {
+    choice = 2;
+    println("choice 2: \t");
+    }
+  
+   if (mousePressed &&  (mouseX >= 415 && mouseX <= 585) && 
+    (mouseY >=65 && mouseY <= 365 )) 
+    choice = 3;
+    
+     if (mousePressed &&  (mouseX >= 605 && mouseX <= 775) && 
+    (mouseY >=65 && mouseY <= 365 )) 
+    choice = 4;
+    
 
   //Continue Button
   noFill();
@@ -183,9 +221,13 @@ void drawPlatforms()
   rect(300, 430, 200,10);
 }
 void platCollide(){
-  if(p1.getY()+30 >= 530 && p1.getY()+30 <= 540 && (p1.getX()+30>=100 && p1.getX()<=300)){
+  
+  
+  if((p1.getY()+30 >= 530 && p1.getY()+30 <= 540 && (p1.getX()+30>=100 && p1.getX()<=300))){
      onPlat=true;
-     p1.setY(500);
+    
+       p1.setY(500);
+      
      println("bonnie");
      p1.jumpReset();
      //p1.setyVel(0);
@@ -215,10 +257,7 @@ void platCollide(){
     //p1.setyVel(1);
   }
 }
-void drawPlayer(Player p){
-  if(choice ==0)
-    p.draw(zrich);
-}
+
 
 
 void keyPressed(){
